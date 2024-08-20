@@ -2,7 +2,6 @@
 
 #Runtime complexity: 0(log n)
 
-
 # incomplate solution
 
 def sortedArray(array):
@@ -15,12 +14,18 @@ def sortedArray(array):
         return sortedArray(less) + [pivot] + sortedArray(high)
 
 def searchInsert(nums,target:int)->int:
-    for i in range(len(nums)):
-        if nums[i] == target:
-            return i
-        elif nums[i] > target:
-            array = nums + [target]
-            sortedArr= sortedArray(array)
-            return searchInsert(sortedArr,target)
+        low, high = 0, len(nums)-1
+        while low <= high:
+            mid = (low + high) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                high = mid - 1
+            elif nums[mid] < target:
+                low = mid + 1
+        nums.append(target)
+        nums = sortedArray(nums)
+        return nums.index(target)
 
-
+nums=[1,3,5,6]
+print(searchInsert(nums,7))
